@@ -1,9 +1,10 @@
 import type { AnalysisResult } from "@/types/analysis";
+import { AssetHeader } from "./dashboard/AssetHeader";
 import { MarketSpreadChart } from "./dashboard/MarketSpreadChart";
+import { AnalystSynthesis } from "./dashboard/AnalystSynthesis";
 import { RiskDisclosures } from "./dashboard/RiskDisclosures";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
 import { AuditorNote } from "./dashboard/AuditorNote";
-import { AssetHeader } from "./dashboard/AssetHeader";
 import { Button } from "@/components/ui/button";
 import { FileDown, RotateCcw } from "lucide-react";
 
@@ -25,7 +26,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full max-w-4xl mx-auto space-y-4">
       <AssetHeader result={result} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -33,6 +34,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
         <LiabilityProjection result={result} />
       </div>
 
+      <AnalystSynthesis result={result} />
       <RiskDisclosures result={result} />
       <AuditorNote result={result} />
 
@@ -62,14 +64,20 @@ MILEAGE:  ${r.mileage_metric.toLocaleString()} km
 VERDICT:  ${r.market_spread_verdict}
 
 ───────────────────────────────────────────
+  SYSTEM SYNTHESIS
+───────────────────────────────────────────
+${r.analyst_synthesis}
+
+───────────────────────────────────────────
   RISK DISCLOSURES
 ───────────────────────────────────────────
-${r.risk_disclosures.map((d) => `[${d.severity_index.toUpperCase()}] ${d.component}\n  ${d.technical_summary}`).join("\n\n")}
+${r.risk_disclosures.map((d) => `[${d.severity_index.toUpperCase()}] ${d.component}\n  Repair: ${d.estimated_repair_cost}\n  ${d.technical_summary}`).join("\n\n")}
 
 ───────────────────────────────────────────
   PROJECTED MONTHLY LIABILITY
 ───────────────────────────────────────────
-$${r.projected_monthly_liability.toLocaleString()}/mo
+$${r.projected_monthly_liability.total.toLocaleString()}/mo
+${r.projected_monthly_liability.breakdown}
 
 ───────────────────────────────────────────
   AUDITOR NOTE
