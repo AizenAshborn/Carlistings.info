@@ -3,14 +3,22 @@ export interface AnalysisResult {
   asking_price: number;
   mileage_metric: number;
   market_spread_verdict: "Undervalued" | "Fair Market" | "Overvalued" | "Deceptive Pricing";
+  market_spread_data: {
+    listing_price: number;
+    cli_market_avg: number;
+  };
+  analyst_synthesis: string;
   risk_disclosures: {
     component: string;
     severity_index: "High" | "Moderate" | "Low";
     technical_summary: string;
+    estimated_repair_cost: string;
   }[];
-  projected_monthly_liability: number;
+  projected_monthly_liability: {
+    total: number;
+    breakdown: string;
+  };
   auditor_note: string;
-  cli_market_average?: number;
 }
 
 export interface AnalysisError {
