@@ -2,9 +2,10 @@ import type { AnalysisResult } from "@/types/analysis";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } from "recharts";
 
 export function MarketSpreadChart({ result }: { result: AnalysisResult }) {
+  const spreadData = result.market_spread_data ?? { listing_price: result.asking_price, cli_market_avg: result.asking_price };
   const data = [
-    { name: "Listing Price", value: result.market_spread_data.listing_price },
-    { name: "CLI Market Avg", value: result.market_spread_data.cli_market_avg },
+    { name: "Listing Price", value: spreadData.listing_price },
+    { name: "CLI Market Avg", value: spreadData.cli_market_avg },
   ];
 
   const listingColor =
