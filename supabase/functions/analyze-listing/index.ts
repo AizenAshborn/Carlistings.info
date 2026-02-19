@@ -65,23 +65,20 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Rate limiting: check IP
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-
-    const { count } = await supabase
-      .from("rate_limits")
-      .select("*", { count: "exact", head: true })
-      .eq("ip_address", ip)
-      .gte("scanned_at", twentyFourHoursAgo);
-
-    if ((count ?? 0) >= 3) {
-      const resetTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-      return new Response(
-        JSON.stringify({ error: "Rate limit exceeded. 3 scans per 24 hours.", code: "RATE_LIMITED", scans_remaining: 0, reset_time: resetTime }),
-        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
+    // Rate limiting disabled during testing
+    // const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    // const { count } = await supabase
+    //   .from("rate_limits")
+    //   .select("*", { count: "exact", head: true })
+    //   .eq("ip_address", ip)
+    //   .gte("scanned_at", twentyFourHoursAgo);
+    // if ((count ?? 0) >= 3) {
+    //   const resetTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+    //   return new Response(
+    //     JSON.stringify({ error: "Rate limit exceeded. 3 scans per 24 hours.", code: "RATE_LIMITED", scans_remaining: 0, reset_time: resetTime }),
+    //     { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    //   );
+    // }
 
     // Image hash for caching
     const encoder = new TextEncoder();
@@ -98,8 +95,8 @@ serve(async (req) => {
       .maybeSingle();
 
     if (cached) {
-      // Record scan for rate limiting even on cache hit
-      await supabase.from("rate_limits").insert({ ip_address: ip });
+      // Rate limit recording disabled during testing
+      // await supabase.from("rate_limits").insert({ ip_address: ip });
       return new Response(JSON.stringify(cached.result), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -181,8 +178,8 @@ serve(async (req) => {
     // Cache result
     await supabase.from("analysis_cache").insert({ image_hash: imageHash, result: parsed });
 
-    // Record scan
-    await supabase.from("rate_limits").insert({ ip_address: ip });
+    // Rate limit recording disabled during testing
+    // await supabase.from("rate_limits").insert({ ip_address: ip });
 
     return new Response(JSON.stringify(parsed), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
