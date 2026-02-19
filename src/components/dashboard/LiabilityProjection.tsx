@@ -14,7 +14,7 @@ export function LiabilityProjection({ result }: { result: AnalysisResult }) {
       <div className="flex items-end gap-2">
         <DollarSign className="w-6 h-6 text-terminal-amber mb-1" />
         <span className="font-mono text-5xl font-bold text-foreground tracking-tighter">
-          {totalLiability.toLocaleString()}
+          {totalLiability != null ? totalLiability.toLocaleString() : "0"}
         </span>
         <span className="font-mono text-sm text-muted-foreground mb-2">/mo</span>
       </div>

@@ -2,10 +2,10 @@ import type { AnalysisResult } from "@/types/analysis";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } from "recharts";
 
 export function MarketSpreadChart({ result }: { result: AnalysisResult }) {
+  if (!result) return null;
+
   const listingPrice = result?.market_spread_data?.listing_price ?? result?.asking_price ?? 0;
   const marketAvg = result?.market_spread_data?.cli_market_avg ?? 0;
-
-  if (!result) return null;
 
   const data = [
     { name: "Listing Price", value: listingPrice },
@@ -41,7 +41,7 @@ export function MarketSpreadChart({ result }: { result: AnalysisResult }) {
               <LabelList
                 dataKey="value"
                 position="right"
-                formatter={(v: number) => `$${v.toLocaleString()}`}
+                formatter={(v: number) => v != null ? `$${v.toLocaleString()}` : "$0"}
                 style={{ fill: "hsl(0, 0%, 90%)", fontSize: 12, fontFamily: "JetBrains Mono", fontWeight: 600 }}
               />
             </Bar>
