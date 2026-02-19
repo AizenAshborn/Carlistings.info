@@ -4,23 +4,9 @@ import { ProcessingAnimation } from "@/components/ProcessingAnimation";
 import { ResultsDashboard } from "@/components/ResultsDashboard";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
 import { useAnalysis } from "@/hooks/useAnalysis";
-import { MOCK_RESULT } from "@/data/mockAnalysis";
-
-const USE_MOCK = true; // Toggle to false for live AI analysis
 
 const Index = () => {
   const { state, result, error, analyze, reset } = useAnalysis();
-  const [showMock, setShowMock] = useState(USE_MOCK);
-
-  const displayState = showMock ? "results" : state;
-  const displayResult = showMock ? MOCK_RESULT : result;
-
-  const handleReset = () => {
-    if (showMock) {
-      setShowMock(false);
-    }
-    reset();
-  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -40,7 +26,7 @@ const Index = () => {
 
       {/* Main */}
       <main className="flex-1 flex items-start justify-center px-6 py-12">
-        {displayState === "upload" && (
+        {state === "upload" && (
           <div className="text-center space-y-8 mt-24">
             <div>
               <h1 className="font-mono text-lg font-bold text-foreground mb-2">
@@ -54,19 +40,19 @@ const Index = () => {
           </div>
         )}
 
-        {displayState === "processing" && (
+        {state === "processing" && (
           <div className="text-center space-y-8 mt-24">
             <p className="font-mono text-xs text-muted-foreground tracking-widest">ANALYZING ASSET...</p>
             <ProcessingAnimation />
           </div>
         )}
 
-        {displayState === "results" && displayResult && (
-          <ResultsDashboard result={displayResult} onReset={handleReset} />
+        {state === "results" && result && (
+          <ResultsDashboard result={result} onReset={reset} />
         )}
 
-        {displayState === "error" && error && (
-          <ErrorDisplay error={error} onRetry={handleReset} />
+        {state === "error" && error && (
+          <ErrorDisplay error={error} onRetry={reset} />
         )}
       </main>
 
