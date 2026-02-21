@@ -4,6 +4,7 @@ import { MarketSpreadChart } from "./dashboard/MarketSpreadChart";
 import { AnalystSynthesis } from "./dashboard/AnalystSynthesis";
 import { AssetVerification } from "./dashboard/AssetVerification";
 import { RiskDisclosures } from "./dashboard/RiskDisclosures";
+import { AssetProtection } from "./dashboard/AssetProtection";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
 import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
 import { AuditorNote } from "./dashboard/AuditorNote";
@@ -40,6 +41,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
       <AnalystSynthesis result={result} />
       <AssetVerification />
       <RiskDisclosures result={result} />
+      <AssetProtection riskDisclosures={result.risk_disclosures} />
       <AuditorNote result={result} />
 
       <div className="flex gap-3 justify-center pt-4">
