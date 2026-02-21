@@ -6,6 +6,7 @@ import { AssetVerification } from "./dashboard/AssetVerification";
 import { RiskDisclosures } from "./dashboard/RiskDisclosures";
 import { AssetProtection } from "./dashboard/AssetProtection";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
+import { CapitalDeployment } from "./dashboard/CapitalDeployment";
 import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
 import { AuditorNote } from "./dashboard/AuditorNote";
 import { Button } from "@/components/ui/button";
@@ -34,7 +35,10 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <MarketSpreadChart result={result} />
-        <LiabilityProjection result={result} />
+        <div className="grid grid-cols-1 gap-4">
+          <LiabilityProjection result={result} />
+          <CapitalDeployment askingPrice={result.asking_price} />
+        </div>
       </div>
 
       <InsuranceLeadForm assetIdentifier={result.asset_identifier ?? "this asset"} />
