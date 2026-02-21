@@ -2,6 +2,7 @@ import type { AnalysisResult } from "@/types/analysis";
 import { AssetHeader } from "./dashboard/AssetHeader";
 import { MarketSpreadChart } from "./dashboard/MarketSpreadChart";
 import { AnalystSynthesis } from "./dashboard/AnalystSynthesis";
+import { AssetVerification } from "./dashboard/AssetVerification";
 import { RiskDisclosures } from "./dashboard/RiskDisclosures";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
 import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
@@ -37,6 +38,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
 
       <InsuranceLeadForm assetIdentifier={result.asset_identifier ?? "this asset"} />
       <AnalystSynthesis result={result} />
+      <AssetVerification />
       <RiskDisclosures result={result} />
       <AuditorNote result={result} />
 
