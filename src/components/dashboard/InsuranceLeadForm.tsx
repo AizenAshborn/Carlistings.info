@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/integrations/supabase/client";
 
 type FormState = "hook" | "form" | "submitting" | "success";
 
@@ -20,10 +21,23 @@ export function InsuranceLeadForm({ assetIdentifier }: InsuranceLeadFormProps) {
   const updateField = (key: keyof typeof fields, value: string) =>
     setFields((prev) => ({ ...prev, [key]: value }));
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!consent) return;
     setState("submitting");
-    setTimeout(() => setState("success"), 1500);
+    try {
+      const { error } = await supabase.from("insurance_leads").insert({
+        asset_identifier: assetIdentifier,
+        first_name: fields.firstName,
+        postal_code: fields.postalCode,
+        phone: fields.phone,
+        email: fields.email,
+      });
+      if (error) throw error;
+      setState("success");
+    } catch (e) {
+      console.error("Lead submission failed:", e);
+      setState("form");
+    }
   };
 
   const isValid =

@@ -35,6 +35,36 @@ export type Database = {
         }
         Relationships: []
       }
+      insurance_leads: {
+        Row: {
+          asset_identifier: string
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          phone: string
+          postal_code: string
+        }
+        Insert: {
+          asset_identifier: string
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          phone: string
+          postal_code: string
+        }
+        Update: {
+          asset_identifier?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          phone?: string
+          postal_code?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           id: string
