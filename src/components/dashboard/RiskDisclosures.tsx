@@ -18,14 +18,14 @@ export function RiskDisclosures({ result }: { result: AnalysisResult }) {
       <div className="space-y-3">
         {result.risk_disclosures.map((risk, i) => (
           <div key={i} className="border border-border rounded-sm p-4 bg-background">
-            <div className="flex items-start justify-between gap-3 mb-3">
+            <div className="flex flex-col gap-2 mb-3">
               <div className="flex items-center gap-3">
                 <Badge variant="outline" className={`font-mono text-[10px] px-2 py-0.5 rounded-sm shrink-0 ${severityStyle[risk.severity_index]}`}>
                   {risk.severity_index.toUpperCase()}
                 </Badge>
                 <p className="font-mono text-sm text-foreground font-medium">{risk.component}</p>
               </div>
-              <p className="font-mono text-sm font-bold text-destructive shrink-0">
+              <p className="font-mono text-sm font-bold text-destructive break-words">
                 {risk.estimated_repair_cost}
               </p>
             </div>
