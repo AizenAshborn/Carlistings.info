@@ -4,6 +4,7 @@ import { MarketSpreadChart } from "./dashboard/MarketSpreadChart";
 import { AnalystSynthesis } from "./dashboard/AnalystSynthesis";
 import { RiskDisclosures } from "./dashboard/RiskDisclosures";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
+import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
 import { AuditorNote } from "./dashboard/AuditorNote";
 import { Button } from "@/components/ui/button";
 import { FileDown, RotateCcw } from "lucide-react";
@@ -34,6 +35,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
         <LiabilityProjection result={result} />
       </div>
 
+      <InsuranceLeadForm assetIdentifier={result.asset_identifier ?? "this asset"} />
       <AnalystSynthesis result={result} />
       <RiskDisclosures result={result} />
       <AuditorNote result={result} />
