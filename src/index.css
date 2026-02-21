@@ -70,8 +70,8 @@
 
 @media print {
   @page {
-    size: auto;
-    margin: 12mm;
+    size: 210mm 2000mm;
+    margin: 10mm;
   }
 
   html, body {
