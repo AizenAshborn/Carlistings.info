@@ -67,3 +67,21 @@
     font-family: 'JetBrains Mono', monospace;
   }
 }
+
+@media print {
+  html, body {
+    background-color: #09090B !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: white !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  nav, header, .print\\:hidden {
+    display: none !important;
+  }
+}
