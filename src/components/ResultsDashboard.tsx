@@ -9,6 +9,7 @@ import { LiabilityProjection } from "./dashboard/LiabilityProjection";
 import { CapitalDeployment } from "./dashboard/CapitalDeployment";
 import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
 import { AuditorNote } from "./dashboard/AuditorNote";
+import { SafeAssetRedirect } from "./dashboard/SafeAssetRedirect";
 import { Button } from "@/components/ui/button";
 import { FileDown, RotateCcw } from "lucide-react";
 
@@ -47,6 +48,11 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
       <RiskDisclosures result={result} />
       <AssetProtection riskDisclosures={result.risk_disclosures} />
       <AuditorNote result={result} />
+      <SafeAssetRedirect
+        assetIdentifier={result.asset_identifier}
+        marketSpreadVerdict={result.market_spread_verdict}
+        riskDisclosures={result.risk_disclosures}
+      />
 
       <div className="flex gap-3 justify-center pt-4">
         <Button variant="outline" onClick={handleExport} className="font-mono text-xs gap-2">
