@@ -8,6 +8,7 @@ import { AssetProtection } from "./dashboard/AssetProtection";
 import { LiabilityProjection } from "./dashboard/LiabilityProjection";
 import { CapitalDeployment } from "./dashboard/CapitalDeployment";
 import { InsuranceLeadForm } from "./dashboard/InsuranceLeadForm";
+import { AffiliateBlock } from "./dashboard/AffiliateBlock";
 import { AuditorNote } from "./dashboard/AuditorNote";
 import { SafeAssetRedirect } from "./dashboard/SafeAssetRedirect";
 import { ExportReportButton } from "./dashboard/ExportReportButton";
@@ -38,6 +39,7 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
       </div>
 
       <InsuranceLeadForm assetIdentifier={result.asset_identifier ?? "this asset"} />
+      <AffiliateBlock assetIdentifier={result.asset_identifier ?? "this asset"} />
       <AnalystSynthesis result={result} />
       <AssetVerification />
       <RiskDisclosures result={result} />
@@ -58,4 +60,3 @@ export function ResultsDashboard({ result, onReset }: ResultsDashboardProps) {
     </div>
   );
 }
-
