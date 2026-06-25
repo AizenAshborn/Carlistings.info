@@ -1,4 +1,4 @@
-import { ExternalLink, FileSearch, Wrench, Shield } from "lucide-react";
+import { ExternalLink, FileSearch, Wrench, Shield, CreditCard, Car } from "lucide-react";
 
 interface AffiliateBlockProps {
   assetIdentifier: string;
@@ -11,7 +11,6 @@ const affiliates = [
     label: "VEHICLE HISTORY REPORT",
     description: "Run a full CARFAX report to verify ownership history, accident records, and odometer fraud.",
     cta: "[ RUN CARFAX REPORT ]",
-    // Replace with your CARFAX affiliate link
     href: "https://www.carfax.com/cfm/buy_used_carfax.cfm?partner=yyy_0",
     color: "terminal-blue",
     border: "border-terminal-blue/40",
@@ -20,12 +19,24 @@ const affiliates = [
       "text-terminal-blue border border-terminal-blue/50 hover:bg-terminal-blue/10",
   },
   {
+    id: "ratehub",
+    icon: CreditCard,
+    label: "FINANCING & CREDIT CARDS",
+    description: "Compare Canada's best credit cards and auto loan rates. Get cash back or rewards on your car purchase.",
+    cta: "[ COMPARE RATES — RATEHUB ]",
+    href: "https://ratehub.ca/ref/xIzfLi",
+    color: "terminal-green",
+    border: "border-terminal-green/40",
+    bg: "bg-terminal-green/5",
+    ctaClass:
+      "text-terminal-green border border-terminal-green/50 hover:bg-terminal-green/10",
+  },
+  {
     id: "yourmechanic",
     icon: Wrench,
     label: "PRE-PURCHASE INSPECTION",
     description: "A certified mobile mechanic comes to the seller's location and inspects the vehicle before you buy.",
     cta: "[ BOOK INSPECTION — $99 ]",
-    // Replace with your YourMechanic affiliate/referral link
     href: "https://www.yourmechanic.com/services/pre-purchase-car-inspection",
     color: "yellow-500",
     border: "border-yellow-500/40",
@@ -39,13 +50,25 @@ const affiliates = [
     label: "EXTENDED WARRANTY",
     description: "Protect this asset from unexpected repair costs. Get quotes from top-rated warranty providers.",
     cta: "[ GET WARRANTY QUOTES ]",
-    // Replace with your warranty affiliate link (e.g. Endurance, CARCHEX)
     href: "https://www.endurancewarranty.com/?coupon=SAVEBIG",
-    color: "terminal-green",
-    border: "border-terminal-green/40",
-    bg: "bg-terminal-green/5",
+    color: "terminal-indigo",
+    border: "border-terminal-indigo/40",
+    bg: "bg-terminal-indigo/5",
     ctaClass:
-      "text-terminal-green border border-terminal-green/50 hover:bg-terminal-green/10",
+      "text-terminal-indigo border border-terminal-indigo/50 hover:bg-terminal-indigo/10",
+  },
+  {
+    id: "turo",
+    icon: Car,
+    label: "EARN INCOME — LIST ON TURO",
+    description: "Turn this asset into a revenue stream. List on Turo and earn $500–$2,000+/month in rental income.",
+    cta: "[ LIST YOUR CAR ]",
+    href: "https://turo.com/list-your-car",
+    color: "secondary",
+    border: "border-secondary/40",
+    bg: "bg-secondary/5",
+    ctaClass:
+      "text-secondary border border-secondary/50 hover:bg-secondary/10",
   },
 ];
 
@@ -53,9 +76,9 @@ export function AffiliateBlock({ assetIdentifier }: AffiliateBlockProps) {
   return (
     <div className="space-y-3">
       <p className="font-mono text-[10px] text-muted-foreground tracking-widest">
-        ▸ ASSET PROTECTION SERVICES
+        ▸ ASSET PROTECTION & PARTNER SERVICES
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {affiliates.map(({ id, icon: Icon, label, description, cta, href, border, bg, ctaClass }) => (
           <a
             key={id}

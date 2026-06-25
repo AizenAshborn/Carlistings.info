@@ -1,4 +1,4 @@
-import { Landmark, ArrowRight } from "lucide-react";
+import { Landmark, ArrowRight, CreditCard, ExternalLink } from "lucide-react";
 
 interface CapitalDeploymentProps {
   askingPrice: number;
@@ -31,14 +31,26 @@ export function CapitalDeployment({ askingPrice }: CapitalDeploymentProps) {
         </div>
       </div>
 
-      <a
-        href="#"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-4 block w-full text-center font-mono text-xs font-bold bg-secondary text-secondary-foreground rounded-sm px-5 py-2.5 hover:bg-secondary/80 transition-colors"
-      >
-        [ INITIALIZE LOAN ENGINE ]
-      </a>
+      <div className="flex flex-col gap-2 mt-4">
+        <a
+          href="https://ratehub.ca/ref/xIzfLi"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="block w-full text-center font-mono text-xs font-bold bg-secondary text-secondary-foreground rounded-sm px-5 py-2.5 hover:bg-secondary/80 transition-colors"
+        >
+          [ INITIALIZE LOAN ENGINE ]
+        </a>
+        <a
+          href="https://ratehub.ca/ref/xIzfLi"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="flex items-center justify-center gap-1.5 w-full text-center font-mono text-[10px] text-terminal-green border border-terminal-green/40 rounded-sm px-4 py-2 hover:bg-terminal-green/10 transition-colors"
+        >
+          <CreditCard className="w-3 h-3" />
+          COMPARE CREDIT CARDS — RATEHUB
+          <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+        </a>
+      </div>
     </div>
   );
 }

@@ -19,6 +19,34 @@ export interface AnalysisResult {
     breakdown: string;
   };
   auditor_note: string;
+
+  // Deal Score Algorithm
+  deal_score?: number; // 0–100
+  deal_score_breakdown?: string;
+
+  // Seller Risk Detection
+  seller_risk_score?: number; // 0–100
+  seller_red_flags?: string[];
+
+  // Vehicle Problem Database
+  known_problems?: {
+    issue: string;
+    frequency: "Very Common" | "Common" | "Uncommon" | "Rare";
+    severity: "Critical" | "Major" | "Minor";
+    typical_cost: string;
+  }[];
+
+  // Rental Solutions
+  rental_potential?: {
+    daily_rate: number;
+    monthly_rate: number;
+    annual_revenue: number;
+    viability: "Excellent" | "Good" | "Marginal" | "Not Recommended";
+    platform_recommendation: string;
+  };
+
+  // Input tracking
+  input_type?: "screenshot" | "url" | "vin";
 }
 
 export interface AnalysisError {
@@ -29,3 +57,4 @@ export interface AnalysisError {
 }
 
 export type AppState = "upload" | "processing" | "results" | "error";
+export type InputMode = "screenshot" | "url" | "vin";

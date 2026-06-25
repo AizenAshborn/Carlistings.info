@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { UploadZone } from "@/components/UploadZone";
+import { URLInput } from "@/components/URLInput";
+import { VINInput } from "@/components/VINInput";
 import { ProcessingAnimation } from "@/components/ProcessingAnimation";
 import { ResultsDashboard } from "@/components/ResultsDashboard";
 import { ErrorDisplay } from "@/components/ErrorDisplay";
 import { useAnalysis } from "@/hooks/useAnalysis";
+import type { InputMode } from "@/types/analysis";
+import { Camera, Link2, Hash } from "lucide-react";
 
 const MAX_FREE_SCANS = 3;
 const STORAGE_KEY = "cli_scan_count";
@@ -33,18 +37,39 @@ function incrementScanCount() {
   } catch {}
 }
 
+const INPUT_TABS: { mode: InputMode; label: string; icon: typeof Camera }[] = [
+  { mode: "screenshot", label: "Screenshot", icon: Camera },
+  { mode: "url", label: "URL", icon: Link2 },
+  { mode: "vin", label: "VIN", icon: Hash },
+];
+
 const Index = () => {
-  const { state, result, error, analyze, reset } = useAnalysis();
+  const { state, result, error, analyze, analyzeUrl, analyzeVin, reset } = useAnalysis();
   const [scanCount, setScanCount] = useState(getScanCount);
+  const [inputMode, setInputMode] = useState<InputMode>("screenshot");
 
   const scansRemaining = Math.max(0, MAX_FREE_SCANS - scanCount);
   const isLimitReached = scansRemaining === 0;
 
-  const handleAnalyze = (file: File) => {
+  const handleAnalyzeScreenshot = (file: File) => {
     if (isLimitReached) return;
     incrementScanCount();
     setScanCount((c) => c + 1);
     analyze(file);
+  };
+
+  const handleAnalyzeUrl = (url: string) => {
+    if (isLimitReached) return;
+    incrementScanCount();
+    setScanCount((c) => c + 1);
+    analyzeUrl(url);
+  };
+
+  const handleAnalyzeVin = (vin: string) => {
+    if (isLimitReached) return;
+    incrementScanCount();
+    setScanCount((c) => c + 1);
+    analyzeVin(vin);
   };
 
   // Sync scan count from error responses (server-side rate limiting)
@@ -61,9 +86,7 @@ const Index = () => {
       <header className="border-b border-border px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-sm font-bold text-foreground tracking-tight">
-              CarListings<span className="text-primary">.info</span>
-            </span>
+            <img src="/logo.png" alt="CarListings.info Logo" className="h-8 w-auto select-none" />
           </div>
           <span className="font-mono text-[10px] text-muted-foreground hidden sm:block tracking-widest">
             AUTOMOTIVE RISK INTELLIGENCE
@@ -74,10 +97,10 @@ const Index = () => {
       {/* Main */}
       <main className="flex-1 flex items-start justify-center px-6 py-12">
         {state === "upload" && (
-          <div className="text-center space-y-8 mt-24">
+          <div className="text-center space-y-8 mt-16 w-full max-w-lg">
             <div>
               <h1 className="font-mono text-lg font-bold text-foreground mb-2">
-                {">"} Upload Asset Listing (Screenshot)
+                {">"} Analyze Any Vehicle Listing
               </h1>
               <p className="font-mono text-xs text-muted-foreground">
                 Facebook Marketplace · AutoTrader · Kijiji · Any platform
@@ -105,7 +128,36 @@ const Index = () => {
                 </div>
               </div>
             ) : (
-              <UploadZone onFileSelected={handleAnalyze} />
+              <>
+                {/* Input Mode Tabs */}
+                <div className="flex items-center justify-center gap-1 border border-border rounded-sm p-1 mx-auto w-fit">
+                  {INPUT_TABS.map(({ mode, label, icon: Icon }) => (
+                    <button
+                      key={mode}
+                      onClick={() => setInputMode(mode)}
+                      className={`flex items-center gap-2 font-mono text-xs px-4 py-2 rounded-sm transition-colors ${
+                        inputMode === mode
+                          ? "bg-primary text-primary-foreground font-bold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Input Area */}
+                {inputMode === "screenshot" && (
+                  <UploadZone onFileSelected={handleAnalyzeScreenshot} />
+                )}
+                {inputMode === "url" && (
+                  <URLInput onUrlSubmitted={handleAnalyzeUrl} />
+                )}
+                {inputMode === "vin" && (
+                  <VINInput onVinSubmitted={handleAnalyzeVin} />
+                )}
+              </>
             )}
           </div>
         )}
@@ -130,7 +182,7 @@ const Index = () => {
       <footer className="border-t border-border px-6 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <span className="font-mono text-[10px] text-muted-foreground">
-            CLI v1.0
+            CLI v2.0
           </span>
           <span
             className={`font-mono text-[10px] ${
